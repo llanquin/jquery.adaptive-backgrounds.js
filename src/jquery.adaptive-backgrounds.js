@@ -1,4 +1,3 @@
-
 /* jshint debug: true, expr: true */
 
 ;(function($){
@@ -6,6 +5,7 @@
   /* Constants & defaults. */ 
   var DATA_COLOR    = 'data-ab-color';
   var DATA_PARENT   = 'data-ab-parent';
+  var DATA_CUSTOM   = 'data-ab-custom'; 
   var DATA_CSS_BG   = 'data-ab-css-background';
   var EVENT_CF      = 'ab-color-found';
 
@@ -80,6 +80,13 @@
           }
           else {
             $parent = $this.parent();
+          }
+          
+          
+          // Allows a custom element, which is not a parent, to be targetted
+          // Image's current adaptive background will not be destroyed
+          if( $this.attr( DATA_CUSTOM ) ){
+            $parent = $parent.add( $('body').find( $this.attr( DATA_CUSTOM ) ) );
           }
 
           $parent.css({ backgroundColor: data.color });
