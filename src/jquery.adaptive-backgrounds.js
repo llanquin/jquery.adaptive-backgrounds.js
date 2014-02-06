@@ -6,6 +6,7 @@
   var DATA_COLOR    = 'data-ab-color';
   var DATA_PARENT   = 'data-ab-parent';
   var DATA_CUSTOM   = 'data-ab-custom'; 
+  var DATA_CUSTOM_P = 'data-ab-custom-property';
   var DATA_CSS_BG   = 'data-ab-css-background';
   var EVENT_CF      = 'ab-color-found';
 
@@ -82,11 +83,21 @@
             $parent = $this.parent();
           }
           
-          // Allows a custom element, which is not a parent, to be targeted
+          // Allows a custom element, which is not a parent, to be targetted
           // Image's current adaptive background will not be destroyed
+          // Also allows to set the property to be manipulated
           if( $this.attr( DATA_CUSTOM ) ){
-            $parent = $parent.add( $('body').find( $this.attr( DATA_CUSTOM ) ) );
+            var customCssMap = {
+              cssProp : 'backgroundColor'
+            }
+
+            if( 'undefined' !== typeof $this.attr( DATA_CUSTOM_P ) ){
+              customCssMap.cssProp = $this.attr( DATA_CUSTOM_P )
+            }
+            
+            var elem = $('body').find( $this.attr( DATA_CUSTOM ) ).css( customCssMap['cssProp'], data.color );
           }
+
 
           $parent.css({ backgroundColor: data.color });
 
