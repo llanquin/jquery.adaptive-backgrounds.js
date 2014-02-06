@@ -82,8 +82,7 @@
             $parent = $this.parent();
           }
           
-          
-          // Allows a custom element, which is not a parent, to be targetted
+          // Allows a custom element, which is not a parent, to be targeted
           // Image's current adaptive background will not be destroyed
           if( $this.attr( DATA_CUSTOM ) ){
             $parent = $parent.add( $('body').find( $this.attr( DATA_CUSTOM ) ) );
